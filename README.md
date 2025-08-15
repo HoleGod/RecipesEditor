@@ -30,7 +30,7 @@
   <li>Install the required dependencies:
     <code>pip install -r requirements.txt</code>.
   </li>
-  <li>Go to directory <code>cd "..\RecipesEditor\flask_admin\Recipes"</code> or, where you saved the project</li>
+  <li>Go to directory <code>cd "..\RecipesEditor\flask_admin"</code> or, where you saved the project</li>
   <li>Run the Flask development server in debug mode:
     <code>python3 -m flask --app Recipes run --debug</code>.
   </li>

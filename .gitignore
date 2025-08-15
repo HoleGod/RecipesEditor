@@ -1,0 +1,24 @@
+# Python cache and bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+#app directory
+app/
+
+#datebase
+instance/
+
+#vscode
+.vscode/
+
+#logs
+*.log
+*.tmp
+*.bak
+
+#.db files
+*.sqlite3
+*.db

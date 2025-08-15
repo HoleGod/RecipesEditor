@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+	<div class="card shadow p-4" style="max-width: 500px; width: 100%;">
+		<h3 class="text-center mb-4">Edit information</h3>
+		<form action="{{ url_for('user.edit', username=g.user.username) }}" method="post" enctype="multipart/form-data">
+			<div class="mb-3">
+				<label for="name" class="form-label"><b>Full Name</b></label>
+				<input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" value="{{ g.user.name }}" required>
+			</div>
+
+			<div class="mb-3">
+				<label for="username" class="form-label"><b>Username</b></label>
+				<input type="text" name="username" id="username" class="form-control" placeholder="Enter your username" value="{{ g.user.username }}" required pattern="^[A-Za-z0-9_]{3,20}$">
+			</div>
+
+			<div class="mb-3">
+				<label for="email" class="form-label"><b>Email</b></label>
+				<input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" value="{{ g.user.email }}" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+			</div>
+
+			<div class="mb-3">
+				<label for="age" class="form-label"><b>Age</b></label>
+				<input type="number" id="age" name="age" class="form-control" min="1" max="120" placeholder="Your age" value="{{ g.user.age }}">
+			</div>
+
+			<div class="mb-3">
+				<label for="workplace" class="form-label"><b>Workplace</b></label>
+				<input type="text" id="workplace" name="workplace" class="form-control" placeholder="Your workplace" value="{{ g.user.workplace }}">
+			</div>
+
+			<div class="mb-3">
+				<label for="street" class="form-label"><b>Street</b></label>
+				<input type="text" id="street" name="street" class="form-control" placeholder="Your street" value="{{ g.user.address }}">
+			</div>
+
+			<div class="mb-3">
+                <label for="profile_image" class="form-label"><b>Profile Image (optional)</b></label>
+                <input type="file" id="profile_image" name="profile_image" class="form-control" accept="image/*" onchange="previewImage(event)">
+                <img id="image_preview" src="{{ url_for('static', filename=g.user.profile_image) }}" alt="Preview" class="mt-2" style="max-width: 150px; border-radius: 8px;">
+            </div>
+
+			<div class="mb-3">
+				<label for="password" class="form-label"><b>Password</b></label>
+				<input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+			</div>
+
+			<div class="mb-3">
+				<label for="password-rpt" class="form-label"><b>Confirm Password</b></label>
+				<input type="password" name="password-rpt" id="password-rpt" class="form-control" placeholder="Repeat your password" required>
+			</div>
+
+			<button type="submit" class="btn btn-success w-100">Change</button>
+		</form>
+
+		<hr>
+	</div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+    function previewImage(event) {
+        const preview = document.getElementById('image_preview');
+        preview.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
+{% endblock %}

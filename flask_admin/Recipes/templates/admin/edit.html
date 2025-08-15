@@ -1,0 +1,71 @@
+{% extends 'admin_base.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="card mb-4 shadow-sm" style="max-width: 600px; margin: auto;">
+	<div class="card-header bg-primary text-white text-center">
+		<h4>Edit Profile</h4>
+	</div>
+	<div class="card-body">
+		<form action="{{ url_for('admin.edit_profile') }}" method="post" enctype="multipart/form-data">
+			<div class="mb-3">
+				<label for="name" class="form-label">Full Name</label>
+				<input type="text" id="name" name="name" class="form-control" value="{{ g.user.name }}" required>
+			</div>
+
+			<div class="mb-3">
+				<label for="username" class="form-label">Username</label>
+				<input type="text" id="username" name="username" class="form-control" value="{{ g.user.username }}" required>
+			</div>
+
+			<div class="mb-3">
+				<label for="email" class="form-label">Email</label>
+				<input type="email" id="email" name="email" class="form-control" value="{{ g.user.email }}" required>
+			</div>
+
+			<div class="mb-3">
+				<label for="workplace" class="form-label">Workplace</label>
+				<input type="text" id="workplace" name="workplace" class="form-control" value="{{ g.user.workplace }}" required>
+			</div>
+
+			<div class="mb-3">
+				<label for="address" class="form-label">Address</label>
+				<input type="text" id="address" name="address" class="form-control" value="{{ g.user.address }}" required>
+			</div>
+
+			<div class="mb-3">
+				<label for="age" class="form-label">Age</label>
+				<input type="number" id="age" name="age" class="form-control" value="{{ g.user.age }}" required min="1">
+			</div>
+
+			<div class="mb-3">
+                <label for="profile_image" class="form-label"><b>Profile Image (optional)</b></label>
+                <input type="file" id="profile_image" name="profile_image" class="form-control" accept="image/*" onchange="previewImage(event)">
+                <img id="image_preview" src="{{ url_for('static', filename=g.user.profile_image) }}" alt="Preview" class="mt-2" style="max-width: 150px; border-radius: 8px;">
+            </div>
+
+			<div class="text-center">
+				<button type="submit" class="btn btn-primary">Save Changes</button>
+				<a href="{{ url_for('admin.admin') }}" class="btn btn-secondary ms-2">Cancel</a>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+    function previewImage(event) {
+        const preview = document.getElementById('image_preview');
+        preview.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
+{% endblock %}
+{% block script %}
+<script>
+    function previewImage(event) {
+        const preview = document.getElementById('image_preview');
+        preview.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
+{% endblock script %}

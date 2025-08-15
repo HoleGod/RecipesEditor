@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+	<h1 class="mb-4">Create New Recipe!</h1>
+	<form action="{{ url_for('recipe.add_recipe') }}" method="POST" enctype="multipart/form-data" class="row g-3">
+
+		<div class="col-12">
+			<label for="title" class="form-label">Title</label>
+			<input type="text" class="form-control" name="title" id="title" required>
+		</div>
+
+		<div class="col-12">
+			<label for="short_description" class="form-label">Short description</label>
+			<input type="text" class="form-control" name="short_description" id="short_description" required>
+		</div>
+
+		<div class="col-12">
+			<label for="ingredients" class="form-label">Ingredients</label>
+			<textarea class="form-control" name="ingredients" id="ingredients" rows="7" required></textarea>
+		</div>
+
+		<div class="col-12">
+			<label for="instruction" class="form-label">Instructions</label>
+			<textarea class="form-control" name="instruction" id="instruction" rows="7" required></textarea>
+		</div>
+
+		<div class="col-12">
+			<label for="notes" class="form-label">Notes</label>
+			<textarea class="form-control" name="notes" id="notes" rows="4"></textarea>
+		</div>
+
+		<div class="col-md-6">
+			<label for="image_file" class="form-label">Upload image</label>
+			<input type="file" class="form-control" name="image_filename" id="image_filename" accept="image/*" onchange="previewImage(event)">
+			<img id="image_preview" 
+				 src="{% if recipe and recipe.image_filename %}{{ url_for('static', filename=recipe.image_filename) }}{% else %}#{% endif %}" 
+				 alt="Preview" class="mt-2" style="max-width: 150px; border-radius: 8px;">
+		</div>		
+
+		<div class="col-md-6">
+			<label for="image_alt" class="form-label">Image description (alt text)</label>
+			<input type="text" class="form-control" name="image_alt" id="image_alt">
+		</div>
+
+		<div class="col-md-6">
+			<label for="categories" class="form-label">Categories</label>
+			<select class="form-select" name="categories" id="categories" multiple>
+				{% for category in categories %}
+					<option value="{{ category.id }}">{{ category.name }}</option>
+				{% endfor %}
+			</select>
+			<div class="form-text">Hold Ctrl (Cmd on Mac) to select multiple</div>
+		</div>
+
+		<div class="col-md-6">
+			<label for="tags" class="form-label">Tags</label>
+			<select class="form-select" name="tags" id="tags" multiple>
+				{% for tag in tags %}
+					<option value="{{ tag.id }}">{{ tag.name }}</option>
+				{% endfor %}
+			</select>
+			<div class="form-text">Hold Ctrl (Cmd on Mac) to select multiple</div>
+		</div>
+
+		<div class="col-12 mt-4">
+			<button type="submit" class="btn btn-success">
+				<i class="fas fa-check"></i> Create Recipe
+			</button>
+		</div>
+
+	</form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    function previewImage(event) {
+        const preview = document.getElementById('image_preview');
+        preview.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
+{% endblock %}

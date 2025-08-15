@@ -1,0 +1,111 @@
+{% extends 'admin_base.html' %}
+
+{% block head %}
+    <style>
+        .profile-card-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .profile-card {
+            max-width: 700px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .profile-card .card-header {
+            background: linear-gradient(135deg, #5c33f6, #7c52f8);
+            color: white;
+            text-align: center;
+        }
+
+        .profile-card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border: 4px solid white;
+            margin-top: -60px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .profile-card .card-body {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .profile-card .card-body h5 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .profile-card .card-body p {
+            margin: 5px 0;
+            font-size: 0.95rem;
+        }
+
+        .profile-card .badge-role {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .badge-admin { background-color: #dc3545; color: white; }
+        .badge-moderator { background-color: #ffc107; color: #212529; }
+        .badge-user { background-color: #6c757d; color: white; }
+
+        .profile-card .card-footer {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 1rem;
+            background-color: #f8f9fa;
+        }
+
+        .profile-card .btn {
+            border-radius: 8px;
+            font-size: 0.85rem;
+            padding: 6px 14px;
+        }
+
+        @media (max-width: 700px) {
+            .profile-card { max-width: 90%; }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-card-container">
+    <div class="profile-card card" style="max-width: 750px; width: 100%;">
+        <div class="card-header">
+            <h4>Admin Profile</h4>
+        </div>
+        <div class="card-body">
+            <div class="d-flex flex-column flex-md-row align-items-center">
+                <img src="{{ url_for('static', filename=g.user.profile_image) }}" alt="Avatar" class="rounded-circle mb-3 mb-md-0 me-md-4" width="200" height="200">
+                <div class="profile-info text-center text-md-start">
+                    <h5 class="card-title">{{ g.user.name }}</h5>
+                    <span class="badge-role 
+                        {% if g.user.role == 'admin' %}badge-admin{% elif g.user.role == 'moderator' %}badge-moderator{% else %}badge-user{% endif %}">
+                        {{ g.user.role|capitalize }}
+                    </span>
+                    <p><strong>Username:</strong> {{ g.user.username }}</p>
+                    <p><strong>Email:</strong> {{ g.user.email }}</p>
+                    <p><strong>Workplace:</strong> {{ g.user.workplace }}</p>
+                    <p><strong>Address:</strong> {{ g.user.address }}</p>
+                    <p><strong>Street:</strong> {{ g.user.address }}</p>
+                    <p><strong>Age:</strong> {{ g.user.age }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-center gap-3">
+            <a href="{{ url_for('admin.edit_profile') }}" class="btn btn-outline-primary btn-sm">Edit Profile</a>
+            <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-secondary btn-sm">Logout</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

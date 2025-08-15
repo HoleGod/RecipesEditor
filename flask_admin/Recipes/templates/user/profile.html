@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+	<div class="card shadow-sm">
+		<div class="row g-0 align-items-center">
+
+			<div class="col-md-4 text-center p-3">
+				<img src="{{ url_for('static', filename=g.user.profile_image) }}" 
+					alt="User's image" 
+					class="img-fluid rounded-circle border"
+					style="width: 200px; height: 200px; object-fit: cover;">
+			</div>
+
+			<div class="col-md-8">
+				<div class="card-body">
+					<h4 class="card-title mb-3">
+						<b>Name:</b> {{ g.user.name }}
+					</h4>
+					<p class="card-text"><strong>Email:</strong> {{ g.user.email }}</p>
+					<p class="card-text"><strong>Age:</strong> {{ g.user.age }} років</p>
+					<p class="card-text"><strong>Workplace:</strong> {{ g.user.workplace }}</p>
+					<p class="card-text"><strong>Street:</strong> {{ g.user.address }}</p>
+				</div>
+			</div>
+
+			<div class="position-absolute bottom-0 end-0 m-4 d-flex gap-2 align-items-center justify-content-end">
+				<a href="{{ url_for('user.edit', username=g.user.username) }}" class="btn btn-warning">Edit</a>
+				<form action="{{ url_for('user.delete', username=g.user.username) }}" method="POST">
+					<button type="submit" class="btn btn-danger" onclick="return confirm('You really want to delete account?');">
+						Delete
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

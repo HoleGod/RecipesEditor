@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --sidebar-width-collapsed: 80px;
+        }
+        
+        body {
+            overflow-x: hidden;
+            background-color: #f8f9fa;
+        }
+        
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1c2e 0%, #16181f 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .main-content {
+            margin-left: var(--sidebar-width);
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar.collapsed {
+            width: var(--sidebar-width-collapsed);
+        }
+        
+        .sidebar-link {
+            color: #a0a3bd;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+            margin: 4px 16px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        
+        .sidebar-link:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .sidebar-link.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo-text {
+            background: linear-gradient(45deg, #6b8cff, #8b9fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: opacity 0.3s ease;
+        }
+        
+        .notification-badge {
+            background: #ff6b6b;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+        }
+        
+        .main-content {
+            margin-left: var(--sidebar-width);
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .collapsed~.main-content {
+            margin-left: var(--sidebar-width-collapsed);
+        }
+        
+        .toggle-btn {
+            position: absolute;
+            right: -15px;
+            top: 20px;
+            background: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .collapsed .toggle-btn {
+            transform: rotate(180deg);
+        }
+        
+        .collapsed .hide-on-collapse {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .collapsed .logo-text {
+            opacity: 0;
+        }
+        
+        .collapsed .sidebar-link {
+            text-align: center;
+            padding: 1rem !important;
+            margin: 4px 8px;
+        }
+        
+        .collapsed .sidebar-link i {
+            margin: 0 !important;
+        }
+        .sidebar.collapsed .sidebar-link.active {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0; 
+        }
+        
+        .sidebar.collapsed .sidebar-link.active i {
+            display: inline-block; 
+            font-size: 1.2rem; 
+            color: #fff; 
+        }
+
+        .sidebar.collapsed .sidebar-link span {
+            display: none;
+        }
+        </style>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+<div class="d-flex">
+    <div class="sidebar d-flex flex-column flex-shrink-0 position-fixed">
+        <button class="toggle-btn" onclick="toggleSidebar()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div class="p-4">
+            <h4 class="logo-text fw-bold mb-0">Admin panel</h4>
+            <p class="text-light small hide-on-collapse">Dashboard</p>
+        </div>
+
+        <div class="nav flex-column">
+            <a href="{{ url_for('admin.dashboard') }}" 
+               class="sidebar-link text-decoration-none p-3 {% if request.endpoint == 'admin.dashboard' %}active{% endif %}">
+               <i class="fa-solid fa-house-circle-check"></i> 
+                <span class="hide-on-collapse">Dashboard</span>
+            </a>
+            <a href="{{ url_for('admin.users') }}" 
+               class="sidebar-link text-decoration-none p-3 {% if request.endpoint == 'admin.users' %}active{% endif %}">
+               <i class="fa-solid fa-user"></i>
+                <span class="hide-on-collapse">Users</span> 
+            </a>
+            <a href="{{ url_for('admin.comments') }}" 
+               class="sidebar-link text-decoration-none p-3 {% if request.endpoint == 'admin.comments' %}active{% endif %}">
+                <i class="fa-solid fa-comments"></i> 
+                <span class="hide-on-collapse">Comments</span>
+            </a>
+            <a href="{{ url_for('admin.recipes') }}" 
+               class="sidebar-link text-decoration-none p-3 {% if request.endpoint == 'admin.recipes' %}active{% endif %}">
+                <i class="fa-solid fa-calendar"></i> 
+                <span class="hide-on-collapse">Recipes</span>
+            </a>
+            <a href="{{ url_for('admin.admin') }}" 
+               class="sidebar-link text-decoration-none p-3 {% if request.endpoint == 'admin.admin' %}active{% endif %}">
+                <i class="fa-solid fa-chart-line"></i> 
+                <span class="hide-on-collapse">Admin</span>
+            </a>
+            <a href="{{ url_for('admin.haf') }}" 
+               class="sidebar-link text-decoration-none p-3 {% if request.endpoint == 'admin.haf' %}active{% endif %}">
+                <i class="fa-solid fa-folder-open"></i>
+                <span class="hide-on-collapse">Help & FAQ</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('collapsed');
+    }
+</script>
+
+{% block script %}
+{% endblock script %}

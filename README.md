@@ -30,6 +30,7 @@
   <li>Install the required dependencies:
     <code>pip install -r requirements.txt</code>.
   </li>
+  <li>Go to directory <code>cd "..\RecipesEditor\flask_admin\Recipes"</code> or, where you saved the project</li>
   <li>Run the Flask development server in debug mode:
     <code>python3 -m flask --app Recipes run --debug</code>.
   </li>
@@ -56,7 +57,7 @@ initial_tags = [
   </pre>
   </li>
   <li>To add this data to the tables, go to the project directory and run:
-    <code>python3 init_date.py</code>
+    <code>python -m Recipes.init_date</code>
   </li>
 </ol>
 
